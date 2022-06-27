@@ -1,0 +1,13 @@
+.profile__elipse {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+@media screen and (max-width: 625px) {
+  .profile__ellipse {
+    margin: 0 auto 0;
+  }
+}

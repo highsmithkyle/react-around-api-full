@@ -1,0 +1,15 @@
+.modal__error {
+  font-size: 12px;
+  line-height: 1.2;
+  color: red;
+  display: block;
+  width: 358px;
+  margin: 5px auto 0;
+}
+
+@media screen and (max-width: 650px) {
+  .modal__error {
+    margin-left: 20px;
+    width: 100%;
+  }
+}

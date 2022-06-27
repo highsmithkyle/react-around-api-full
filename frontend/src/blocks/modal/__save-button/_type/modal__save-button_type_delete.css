@@ -1,0 +1,9 @@
+.modal__save-button_type_delete {
+  margin: 0 38px 36px;
+}
+
+@media screen and (max-width: 650px) {
+  .modal__save-button_type_delete {
+    margin: 0px 15px 36px;
+  }
+}

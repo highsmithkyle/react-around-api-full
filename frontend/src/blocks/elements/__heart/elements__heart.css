@@ -1,0 +1,16 @@
+.elements__heart {
+  height: 21px;
+  width: 19px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  background-size: contain;
+  border: none;
+  justify-self: center;
+  transition: 0.5s;
+}
+
+.elements__heart:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}

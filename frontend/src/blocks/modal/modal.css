@@ -1,0 +1,32 @@
+@import url(../modal/__box/modal__box.css);
+@import url(../modal/__title/modal__title.css);
+@import url(../modal/__edit-form/modal__edit-form.css);
+@import url(../modal/__info/modal__info.css);
+@import url(../modal/__save-button/modal__save-button.css);
+@import url(../modal/__save-button/_disabled/modal__save-button_disabled.css);
+@import url(../modal/__close-button/modal__close-button.css);
+@import url(../modal/__image-preview/modal__image-preview.css);
+@import url(../modal/__image-subtitle/modal__image-subtitle.css);
+@import url(../modal/__error/modal__error.css);
+@import url(../modal/__info/_type/modal__info_type_error.css);
+@import url(../modal/__title/_type/modal__title-type-delete.css);
+@import url(../modal/__save-button/_type/modal__save-button_type_delete.css);
+
+.modal {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  box-sizing: border-box;
+  width: 99.9%;
+  height: 99.9%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto;
+  padding: 30px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}

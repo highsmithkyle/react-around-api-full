@@ -1,0 +1,15 @@
+.modal__edit-form {
+  width: 430px;
+  transition: 0.5s linear;
+  margin: 0 auto;
+}
+
+.modal__form_type_delete-form {
+  height: 180px;
+}
+
+@media screen and (max-width: 650px) {
+  .modal__edit-form {
+    width: 282px;
+  }
+}

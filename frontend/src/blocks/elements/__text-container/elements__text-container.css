@@ -1,0 +1,6 @@
+.elements__text-container {
+  background: white;
+  display: flex;
+  border-radius: 0 0 10px 10px;
+  justify-content: space-between;
+}

@@ -1,0 +1,18 @@
+@import url(../login/__form/login__form.css);
+@import url(../login/__button/login__button.css);
+@import url(../login/__content/login__content.css);
+@import url(../login/__form/login__form.css);
+@import url(../login/__input/login-form__input.css);
+@import url(../login/__link/login__link.css);
+@import url(../login/__text/login__text.css);
+@import url(../login/__title/login__title.css);
+@import url(../login/__redirection/login__redirection.css);
+
+.login {
+  font-family: Inter, Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+}
