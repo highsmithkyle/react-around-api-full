@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const {
   HTTP_SUCCESS,
@@ -32,7 +34,8 @@ const getUsers = (req, res) => {
     .catch(() =>
       res
         .status(HTTP_INTERNAL_SERVER_ERROR)
-        .send({ message: 'An error has occured on the server' }));
+        .send({ message: 'An error has occured on the server' }),
+    );
 };
 
 const getUser = (req, res) => {
