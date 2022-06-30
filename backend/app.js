@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const router = require('./routes');
-const { login, createUser } = require('./controllers/users');
-require('dotenv').config();
+const { createUser } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -20,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/signin', login);
+// app.post('/signin', login);
 app.post('/signup', createUser);
 
 app.listen(PORT, () => {

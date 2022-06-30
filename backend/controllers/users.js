@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // const { JWT_SECRET } = require('../utils/config');
-const { NODE_ENV, JWT_SECRET } = process.env;
+// const { NODE_ENV, JWT_SECRET } = process.env;
 
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
@@ -18,23 +18,23 @@ const {
   HTTP_INTERNAL_SERVER_ERROR,
 } = require('../utils/error');
 
-const login = (req, res) => {
-  const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-        {
-          expiresIn: '7d',
-        },
-      );
-      res.send({ data: user.toJSON(), token });
-    })
-    .catch((err) => {
-      res.status(401).send({ message: err.message });
-    });
-};
+// const createUser = (req, res) => {
+//   const { name, about, avatar } = req.body;
+
+//   User.create({ name, about, avatar })
+//     .then((user) => res.status(HTTP_CREATED).send({ data: user }))
+//     .catch((error) => {
+//       if (error.name === 'ValidationError') {
+//         res.status(HTTP_BAD_REQUEST).send({
+//           message: error.message,
+//         });
+//       } else {
+//         res
+//           .status(HTTP_INTERNAL_SERVER_ERROR)
+//           .send({ message: 'An error has occured' });
+//       }
+//     });
+// };
 
 const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
@@ -45,7 +45,7 @@ const createUser = (req, res, next) => {
           'The user with the provided email already exists',
         );
       } else {
-        return bcrypt.hash(password, 10);
+        return bcryptjs.hash(password, 10);
       }
     })
     .then((hash) =>
@@ -156,7 +156,7 @@ const updateAvatar = (req, res) => {
 };
 
 module.exports = {
-  login,
+  // login,
   createUser,
   getUsers,
   getUser,
