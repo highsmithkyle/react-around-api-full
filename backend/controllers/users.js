@@ -19,23 +19,19 @@ const {
 
 // from backend project
 
-// const createUser = (req, res) => {
-//   const { name, about, avatar } = req.body;
-
-//   User.create({ name, about, avatar })
-//     .then((user) => res.status(HTTP_CREATED).send({ data: user }))
-//     .catch((error) => {
-//       if (error.name === 'ValidationError') {
-//         res.status(HTTP_BAD_REQUEST).send({
-//           message: error.message,
-//         });
-//       } else {
-//         res
-//           .status(HTTP_INTERNAL_SERVER_ERROR)
-//           .send({ message: 'An error has occured' });
-//       }
-//     });
-// };
+const login = (req, res) => {
+  const { email, password } = req.body;
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: '7d',
+      });
+      res.send({ data: user.toJSON(), token });
+    })
+    .catch((err) => {
+      res.status(401).send({ message: err.message });
+    });
+};
 
 const createUser = (req, res, next) => {
   console.log(12334);
@@ -143,6 +139,7 @@ const updateAvatar = (req, res) => {
 };
 
 module.exports = {
+  login,
   createUser,
   getUsers,
   getUser,
