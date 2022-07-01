@@ -21,6 +21,7 @@
   "homepage": "https://https://github.com/highsmithkyle/around-express/blob/main/README.md",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",

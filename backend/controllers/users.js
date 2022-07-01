@@ -2,8 +2,7 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// const { JWT_SECRET } = require('../utils/config');
-// const { NODE_ENV, JWT_SECRET } = process.env;
+// central error - update and use from now on
 
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
@@ -17,6 +16,8 @@ const {
   HTTP_NOT_FOUND,
   HTTP_INTERNAL_SERVER_ERROR,
 } = require('../utils/error');
+
+// from backend project
 
 // const createUser = (req, res) => {
 //   const { name, about, avatar } = req.body;
@@ -37,34 +38,19 @@ const {
 // };
 
 const createUser = (req, res, next) => {
+  console.log(12334);
   const { name, about, avatar, email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (user) {
-        throw new ConflictError(
-          'The user with the provided email already exists',
-        );
+        throw new Error('The user with the provided email already exists');
       } else {
-        return bcryptjs.hash(password, 10);
+        return bcrypt.hash(password, 10);
       }
     })
-    .then((hash) =>
-      User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
-      }),
-    )
-    .then((data) => res.status(201).send({ data }))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Missing or invalid email or password'));
-      } else {
-        next(err);
-      }
-    });
+    .then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((user) => res.status(201).send({ data: user }))
+    .catch((err) => res.status(400).send(err));
 };
 
 const getUsers = (req, res) => {
@@ -78,6 +64,7 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
+  console.log(123455);
   const { userId } = req.params;
   User.findById(userId)
     .orFail(() => {
@@ -156,7 +143,6 @@ const updateAvatar = (req, res) => {
 };
 
 module.exports = {
-  // login,
   createUser,
   getUsers,
   getUser,
