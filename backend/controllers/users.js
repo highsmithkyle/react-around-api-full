@@ -2,13 +2,6 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// central error - update and use from now on
-
-const BadRequestError = require('../errors/bad-request-error');
-const ConflictError = require('../errors/conflict-error');
-const NotFoundError = require('../errors/not-found-error');
-const UnauthorizedError = require('../errors/unauthorized-error');
-
 const {
   HTTP_SUCCESS,
   HTTP_CREATED,
@@ -16,8 +9,6 @@ const {
   HTTP_NOT_FOUND,
   HTTP_INTERNAL_SERVER_ERROR,
 } = require('../utils/error');
-
-// from backend project
 
 const login = (req, res) => {
   const { email, password } = req.body;
@@ -60,7 +51,7 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  console.log(123455);
+  console.log(12345);
   const { userId } = req.params;
   User.findById(userId)
     .orFail(() => {
