@@ -5,7 +5,7 @@ const cardRouter = require('./cards');
 const auth = require('../middleware/auth');
 const { createUser, login } = require('../controllers/users');
 
-router.use(auth);
+// router.use(auth);
 
 router.post('/signin', login);
 router.post('/signup', createUser);

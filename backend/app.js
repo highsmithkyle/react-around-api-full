@@ -8,6 +8,8 @@ require('dotenv').config;
 const { PORT = 3000 } = process.env;
 const app = express();
 
+// console.log(`process.env is ${process.env.NODE_ENV}`); // add for auth
+
 mongoose.connect('mongodb://localhost:27017/aroundb');
 
 app.use(helmet());
@@ -26,5 +28,4 @@ app.post('/signup', createUser);
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`App listening at ${PORT}`);
-  console.log(process.env.NODE_ENV);
 });
