@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const router = require('./routes');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login } = require('./controllers/users'); // add login back in
+require('dotenv').config;
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -25,4 +26,5 @@ app.post('/signup', createUser);
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`App listening at ${PORT}`);
+  console.log(process.env.NODE_ENV);
 });
