@@ -12,6 +12,7 @@ router.post('/signin', login);
 router.post('/signup', createUser);
 
 router.use(auth); // put below to protect other routes
+
 router.use('/users', userRouter);
 router.use('/cards', cardRouter);
 

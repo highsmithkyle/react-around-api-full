@@ -36,26 +36,18 @@ const createCard = (req, res) => {
     });
 };
 
-const deleteCard = (req, res) => {
+const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   Card.findById(cardId)
-    .orFail(() => {
-      const error = new Error('No card found for the specified id');
-      error.statusCode = HTTP_NOT_FOUND;
-      throw error;
-    })
-    .then((cards) => Card.deleteOne(cards).then((card) => res.send({ data: card })))
-    .catch((error) => {
-      if (error.name === 'CastError') {
-        res.status(HTTP_BAD_REQUEST).send({ message: 'Invalid card id' });
-      } else if (error.statusCode === HTTP_NOT_FOUND) {
-        res.status(HTTP_NOT_FOUND).send({ message: error.message });
+    .orFail(() => new Error('Card ID not found'))
+    .then((card) => {
+      if (!card.owner.equals(req.user._id)) {
+        next(new Error("You cannot delete someone else's card"));
       } else {
-        res
-          .status(HTTP_INTERNAL_SERVER_ERROR)
-          .send({ message: 'An error occurred' });
+        Card.deleteOne(card).then(() => res.send({ data: card }));
       }
-    });
+    })
+    .catch(next);
 };
 
 const updateLike = (req, res, method) => {
