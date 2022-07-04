@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const router = require('./routes');
 const { createUser, login } = require('./controllers/users'); // add login back in
-require('dotenv').config;
+require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const app = express();
 
-// console.log(`process.env is ${process.env.NODE_ENV}`); // add for auth
+console.log(`process.env is ${process.env.NODE_ENV}`); // add for auth
 
 mongoose.connect('mongodb://localhost:27017/aroundb');
 

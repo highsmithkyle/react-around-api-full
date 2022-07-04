@@ -1,19 +1,20 @@
 const router = require('express').Router();
 const {
-  login,
+  // login,
   getUsers,
-  getUser,
-  createUser,
+  getCurrentUser,
+  getUserById,
+  // createUser,
   updateUser,
   updateAvatar,
 } = require('../controllers/users');
 
 router.get('/', getUsers);
-
-// router.get('/:userId', getUser); update this? or change to /me
-router.get('/me, getUser');
-router.post('/', createUser);
+router.get('/:userId', getUserById);
+router.get('/me', getCurrentUser);
 router.patch('/me', updateUser);
 router.patch('/me/avatar', updateAvatar);
+
+// router.post('/', createUser);
 
 module.exports = router;

@@ -1,15 +1,17 @@
 const router = require('express').Router();
-const { HTTP_BAD_REQUEST } = require('../utils/error');
+var bodyParser = require('body-parser');
 const userRouter = require('./users');
 const cardRouter = require('./cards');
 const auth = require('../middleware/auth');
 const { createUser, login } = require('../controllers/users');
+const { HTTP_BAD_REQUEST } = require('../utils/error');
 
-// router.use(auth);
+router.use(bodyParser.json());
 
 router.post('/signin', login);
 router.post('/signup', createUser);
 
+router.use(auth); // put below to protect other routes
 router.use('/users', userRouter);
 router.use('/cards', cardRouter);
 

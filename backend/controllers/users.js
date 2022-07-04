@@ -40,6 +40,13 @@ const createUser = (req, res, next) => {
     .catch((err) => res.status(400).send(err));
 };
 
+const getCurrentUser = (req, res, next) => {
+  User.findById(req.user._id)
+    .orFail(new Error('User ID not found'))
+    .then((user) => res.status(HTTP_SUCCESS_OK).send(user))
+    .catch(next);
+};
+
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.status(HTTP_SUCCESS).send({ data: users }))
@@ -50,7 +57,7 @@ const getUsers = (req, res) => {
     );
 };
 
-const getUser = (req, res) => {
+const getUserById = (req, res) => {
   console.log(12345);
   const { userId } = req.params;
   User.findById(userId)
@@ -133,7 +140,8 @@ module.exports = {
   createUser,
   login,
   getUsers,
-  getUser,
+  getCurrentUser,
+  getUserById,
   updateUser,
   updateAvatar,
 };
