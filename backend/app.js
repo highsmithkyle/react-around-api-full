@@ -9,8 +9,6 @@ require('dotenv').config();
 const { PORT = 3000 } = process.env;
 const app = express();
 
-console.log(`process.env is ${process.env.NODE_ENV}`); // add for auth
-
 mongoose.connect('mongodb://localhost:27017/aroundb');
 
 app.use(cors());

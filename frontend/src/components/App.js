@@ -102,7 +102,7 @@ function App() {
       .then(() => {
         setCards(cards.filter((item) => item !== card));
       })
-      .catch((error) => console.error(error));
+     .catch((error) => console.error(error));
   }
 
   function handleUpdateUser(userData) {

@@ -22,11 +22,13 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.status(HTTP_CREATED).send({ data: card }))
-    .catch((error) => {
-      if (error.name === 'ValidationError') {
-        res.status(HTTP_BAD_REQUEST).send({
-          message: error.message,
+    .then((card) => res.status(HTTP_SUCCESS_OK).send(card))
+    .catch((err) => {
+      if (err.name === 'ValidatorError') {
+        res.status(HTTP_CLIENT_ERROR_BAD_REQUEST).send({
+          message: `${Object.values(err.errors)
+            .map((error) => error.message)
+            .join(', ')}`,
         });
       } else {
         res
