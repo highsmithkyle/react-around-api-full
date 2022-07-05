@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+require('dotenv').config();
 const router = require('./routes');
 const { createUser, login } = require('./controllers/users'); // add login back in
-require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -24,6 +24,9 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
   next();
 });
+
+app.use(cors());
+app.options('*', cors());
 
 app.use(cors());
 app.options('*', cors());

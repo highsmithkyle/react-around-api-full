@@ -22,7 +22,7 @@ const createCard = (req, res) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.status(HTTP_SUCCESS_OK).send(card))
+    .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((err) => {
       if (err.name === 'ValidatorError') {
         res.status(HTTP_CLIENT_ERROR_BAD_REQUEST).send({
@@ -31,6 +31,7 @@ const createCard = (req, res) => {
             .join(', ')}`,
         });
       } else {
+        console.log(err);
         res
           .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: 'An error has occured on the server' });

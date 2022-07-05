@@ -25,7 +25,7 @@ const login = (req, res) => {
 };
 
 const createUser = (req, res, next) => {
-  console.log(12334);
+  console.log('user created');
   const { name, about, avatar, email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
