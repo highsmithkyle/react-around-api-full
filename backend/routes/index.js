@@ -6,6 +6,8 @@ const auth = require('../middleware/auth');
 const { createUser, login } = require('../controllers/users');
 const { HTTP_BAD_REQUEST } = require('../utils/error');
 
+//const { validateLogin, validateUser } = require('../middleware/validation');
+
 router.use(bodyParser.json());
 
 router.post('/signin', login);

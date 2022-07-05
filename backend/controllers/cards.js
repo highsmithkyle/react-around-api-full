@@ -40,17 +40,27 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res, next) => {
-  const { cardId } = req.params;
-  Card.findById(cardId)
+  const { id } = req.params;
+  Card.findById({ _id: id })
     .orFail(() => new Error('Card ID not found'))
     .then((card) => {
-      if (!card.owner.equals(req.user._id)) {
-        next(new Error("You cannot delete someone else's card"));
-      } else {
-        Card.deleteOne(card).then(() => res.send({ data: card }));
+      if (!(card.owner.toString() === req.user._id)) {
+        throw new Error("Don't have permission to delete");
       }
+      Card.findByIdAndRemove({ _id: id })
+        .orFail()
+        .then((card) => res.status(HTTP_SUCCESS_OK).send(card))
+        .catch(next);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(HTTP_CLIENT_ERROR_BAD_REQUEST).send({
+          message: 'Invalid Card ID',
+        });
+      } else {
+        next(err);
+      }
+    });
 };
 
 const updateLike = (req, res, method) => {
