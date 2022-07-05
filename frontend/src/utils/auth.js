@@ -1,5 +1,7 @@
 export const BASE_URL = 'https://register.nomoreparties.co';
 
+// check if validation is correct
+
 const checkErrors = (res) => {
   if (res.ok) {
     return res.json();
@@ -45,7 +47,7 @@ export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
-      Accept: 'application/json',
+      // Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },

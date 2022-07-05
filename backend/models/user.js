@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 2,
     maxlength: 30,
-    default: 'Software Engineer',
+    default: 'Web Developer',
   },
   avatar: {
     type: String,
