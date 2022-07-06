@@ -34,10 +34,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
             <button
                 className={cardDeleteButtonClassName}
                 type="button"
-                // className={cardDeleteButtonClassName}
-
                 onClick={handleDeleteClick}
-
             />
 
             <img

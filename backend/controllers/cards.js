@@ -30,7 +30,6 @@ const createCard = (req, res) => {
             .join(', ')}`,
         });
       } else {
-        console.log(err);
         res
           .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: 'An error has occured on the server' });

@@ -1,12 +1,12 @@
 const router = require('express').Router();
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const userRouter = require('./users');
 const cardRouter = require('./cards');
 const auth = require('../middleware/auth');
 const { createUser, login } = require('../controllers/users');
 const { HTTP_BAD_REQUEST } = require('../utils/error');
 
-//const { validateLogin, validateUser } = require('../middleware/validation');
+//const {validateLogin, validateUser} = require('../middleware/validation');
 
 router.use(bodyParser.json());
 

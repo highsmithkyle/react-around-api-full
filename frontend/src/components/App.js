@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Redirect, Routes, Navigate, useNavigate, Switch } from 'react-router-dom';
-import { register, authorize, checkToken } from '../utils/auth';
-import {auth} from '../utils/auth';
+import { Route, Redirect, Switch } from 'react-router-dom';
+import { auth } from '../utils/auth';
 import api from '../utils/api';
 import ProtectedRoute from './ProtectedRoute';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-
-import { useHistory } from "react-router-dom"
-
+import { useHistory } from 'react-router-dom';
 
 import Login from './Login';
 import Register from './Register';
@@ -27,21 +24,20 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isTooltipOpen, setTooltipOpen] = useState(false);
   const [toolTipStatus, setToolTipStatus] = React.useState('');
   const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setIsLoggedIn] = React.useState(false);
-  const [status, setStatus] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  
+  const [isInfoToolTipOpen, setisInfoToolTipOpen] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+
   const history = useHistory();
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     const token = localStorage.getItem('jwt');
-    if (token && loggedIn) {
+    if (token && isLoggedIn) {
       api
         .getAppInfo(token)
         .then(([CardData, userData]) => {
@@ -50,7 +46,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  }, [loggedIn]);
+  }, [isLoggedIn]);
 
   React.useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -70,23 +66,17 @@ function App() {
     }
   }, []);
 
-  function handleCardClick(card) {
-    setSelectedCard(card);
-  }
-
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((cardId) => cardId === currentUser._id);
     api
       .changeLikeStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((card) => (card._id === card._id ? newCard : card))
+          state.map((c) => (c._id === card._id ? newCard : c)),
         );
       })
       .catch((err) => {
-        console.log(
-          'An error occured while liking the card'
-        );
+        console.log('An error occured while liking the card');
         console.log(err);
       });
   };
@@ -99,7 +89,6 @@ function App() {
       })
       .catch((error) => console.log(error));
   }
-
 
   function handleUpdateUser(userData) {
     api
@@ -130,9 +119,6 @@ function App() {
       })
       .catch((error) => console.error(error));
   }
-
-
-
 
   function onRegister({ email, password }) {
     auth
@@ -203,7 +189,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
-    setTooltipOpen(false);
+    setisInfoToolTipOpen(false);
   }
 
   useEffect(() => {
@@ -219,70 +205,69 @@ function App() {
   }, []);
 
   return (
-   
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="page">
-      <Header email={email} onSignOut={onSignOut} />
-      <Switch>
-        <ProtectedRoute exact path="/" loggedIn={isLoggedIn}>
-          <Main
-            onEditProfileClick={handleEditProfileClick}
-            onAddPlaceClick={handleAddPlaceClick}
-            onEditAvatarClick={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-            cards={cards}
-          />
-        </ProtectedRoute>
-        <Route path="/signup">
-          <Register onRegister={onRegister} />
-        </Route>
-        <Route path="/signin">
-          <Login onLogin={onLogin} />
-        </Route>
-        <Route>
-          {LoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
-        </Route>
-      </Switch>
-      <Footer />
+      <div className="page">
+        <Header email={email} onSignOut={onSignOut} />
+        <Switch>
+          <ProtectedRoute exact path="/" LoggedIn={isLoggedIn}>
+            <Main
+              onEditProfileClick={handleEditProfileClick}
+              onAddPlaceClick={handleAddPlaceClick}
+              onEditAvatarClick={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              cards={cards}
+            />
+          </ProtectedRoute>
+          <Route path="/signup">
+            <Register onRegister={onRegister} />
+          </Route>
+          <Route path="/signin">
+            <Login onLogin={onLogin} />
+          </Route>
+          <Route>
+            {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
+          </Route>
+        </Switch>
+        <Footer />
 
-      <EditAvatarPopup
-        isOpen={isEditAvatarPopupOpen}
-        onUpdateAvatar={handleUpdateAvatar}
-        closeButton={closeButton}
-        onClose={closeAllPopups}
-      />
-      <EditProfilePopup
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        closeButton={closeButton}
-        onUpdateUser={handleUpdateUser}
-      />
-      <AddPlacePopup
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        closeButton={closeButton}
-        onAddPlaceSubmit={handleAddPlaceSubmit}
-      />
-      <PopupWithForm
-        modalType={'delete'}
-        modalTitle={'Are you sure?'}
-        modalButtonText={'Yes'}
-        closeButton={closeButton}
-      />
-      <ImagePopup
-        closeButton={closeButton}
-        selectedCard={selectedCard}
-        onClose={closeAllPopups}
-      />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onUpdateAvatar={handleUpdateAvatar}
+          closeButton={closeButton}
+          onClose={closeAllPopups}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          closeButton={closeButton}
+          onUpdateUser={handleUpdateUser}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          closeButton={closeButton}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
+        <PopupWithForm
+          modalType={'delete'}
+          modalTitle={'Are you sure?'}
+          modalButtonText={'Yes'}
+          closeButton={closeButton}
+        />
+        <ImagePopup
+          closeButton={closeButton}
+          selectedCard={selectedCard}
+          onClose={closeAllPopups}
+        />
 
-      <InfoTooltip
-        isOpen={isTooltipOpen}
-        closeButton={closeButton}
-        status={toolTipStatus}
-        onClose={closeAllPopups}
-      />
+        <InfoTooltip
+          isOpen={isInfoToolTipOpen}
+          closeButton={closeButton}
+          status={toolTipStatus}
+          onClose={closeAllPopups}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
