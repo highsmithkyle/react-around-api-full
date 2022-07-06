@@ -73,6 +73,7 @@ const api = new Api({
   baseUrl: 'https://around.nomoreparties.co/v1/group-12',
   headers: {
     authorization: 'f4ba53cb-c4b1-4360-b78c-98b41af44bf6',
+    // authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   },
 });

@@ -39,10 +39,13 @@ const createCard = (req, res) => {
 
 const deleteCard = (req, res, next) => {
   const { id } = req.params;
+  console.log(req.params);
   Card.findById({ _id: id })
     .orFail(() => new Error('Card ID not found'))
     .then((card) => {
+      console.log(id);
       if (!(card.owner.toString() === req.user._id)) {
+        console.log(error);
         throw new Error('Missing permission to delete');
       }
       Card.findByIdAndRemove({ _id: id })
@@ -51,6 +54,7 @@ const deleteCard = (req, res, next) => {
         .catch(next);
     })
     .catch((err) => {
+      console.log(err);
       if (err.name === 'CastError') {
         res.status(HTTP_BAD_REQUEST).send({
           message: 'Invalid Card ID',
@@ -61,35 +65,55 @@ const deleteCard = (req, res, next) => {
     });
 };
 
-const updateLike = (req, res) => {
+const likeCard = (req, res) => {
   const currentUser = req.user._id;
-  const { cardId } = req.params;
+  const { id } = req.params;
 
   Card.findByIdAndUpdate(
-    { _id: cardId },
+    { _id: id },
     { $addToSet: { likes: currentUser } },
     { new: true },
   )
-
     .orFail(new Error('Card not found'))
     .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
-        res.status(HTTP_NOT_FOUND).send({ message: 'Card not found' });
+        res.status(HTTP_NOT_FOUND).send({ message: ' Card not found' });
       } else if (err.name === 'CastError') {
         res.status(HTTP_BAD_REQUEST).send({
           message: 'Invalid Card ID passed for liking a card',
         });
       } else {
-        res.status(HTTP_INTERNAL_SERVER_ERROR).send({
+        res.status(HTTP_SERVER_ERROR).send({
           message: ' An error has occurred on the server',
         });
       }
     });
 };
 
-const likeCard = (req, res) => updateLike(req, res, '$addToSet');
-const unlikeCard = (req, res) => updateLike(req, res, '$pull');
+const unlikeCard = (req, res) => {
+  const currentUser = req.user._id;
+  const { id } = req.params;
+
+  Card.findByIdAndUpdate(id, { $pull: { likes: currentUser } }, { new: true })
+    .orFail()
+    .then((card) => res.status(HTTP_SUCCESS_OK).send(card))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(HTTP_CLIENT_ERROR_NOT_FOUND)
+          .send({ message: 'Card not found' });
+      } else if (err.name === 'CastError') {
+        res.status(HTTP_CLIENT_ERROR_BAD_REQUEST).send({
+          message: 'Invalid Card ID passed for disliking a card',
+        });
+      } else {
+        res.status(HTTP_INTERNAL_SERVER_ERROR).send({
+          message: 'An error has occurred on the server',
+        });
+      }
+    });
+};
 
 module.exports = {
   getCards,

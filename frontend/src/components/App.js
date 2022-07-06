@@ -90,29 +90,29 @@ function App() {
       .catch((error) => console.log(error));
   }
 
-  function handleUpdateUser(userData) {
+  function handleUpdateUser({ name, about }) {
     api
-      .changeProfileInfo(userData)
+      .changeProfileInfo({ name, about })
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((error) => console.error(error));
   }
 
-  function handleUpdateAvatar(userData) {
+  function handleUpdateAvatar(avatar) {
     api
-      .changeProfileAvatar(userData)
+      .changeProfileAvatar(avatar)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((error) => console.error(error));
   }
 
-  function handleAddPlaceSubmit(card) {
+  function handleAddPlaceSubmit(newCard) {
     api
-      .createCard(card, localStorage.getItem('jwt'))
+      .createCard(newCard, localStorage.getItem('jwt'))
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
