@@ -41,9 +41,9 @@ app.listen(PORT, () => {
 });
 
 // remove hardcoded user object
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '62989027e3b3e5515cba6395',  // auth now handles
-//   };
-//   next();
-// });
+app.use((req, res, next) => {
+  req.user = {
+    _id: '62989027e3b3e5515cba6395', // auth now handles
+  };
+  next();
+});

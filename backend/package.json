@@ -18,7 +18,6 @@
   "bugs": {
     "url": "https://github.com/highsmithkyle/around-express/issues"
   },
-  "homepage": "https://https://github.com/highsmithkyle/around-express/blob/main/README.md",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -30,12 +29,17 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "express": "^4.18.1",
+    "express-winston": "^4.2.0",
     "helmet": "^5.0.2",
     "history": "^5.3.0",
+    "is-email": "^1.0.2",
+    "is-url": "^1.2.4",
     "isemail": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
+    "mongo-objectid": "^1.2.2",
     "mongoose": "^6.3.3",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "winston": "^3.8.1"
   },
   "devDependencies": {
     "eslint": "^8.13.0",

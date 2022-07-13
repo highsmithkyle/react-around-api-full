@@ -69,7 +69,7 @@ function App() {
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((cardId) => cardId === currentUser._id);
     api
-      .changeLikeStatus(card._id, !isLiked)
+      .changeLikeStatus(card._id, !isLiked, localStorage.getItem('jwt'))
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c)),
@@ -83,7 +83,7 @@ function App() {
 
   function handleCardDelete(card) {
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, localStorage.getItem('jwt'))
       .then(() => {
         setCards((cards) => cards.filter((item) => item._id !== card._id));
       })
@@ -92,7 +92,7 @@ function App() {
 
   function handleUpdateUser({ name, about }) {
     api
-      .changeProfileInfo({ name, about })
+      .changeProfileInfo({ name, about }, localStorage.getItem('jwt'))
       .then((res) => {
         setCurrentUser(res.data);
         closeAllPopups();
@@ -102,7 +102,7 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     api
-      .changeProfileAvatar(avatar)
+      .changeProfileAvatar({ avatar }, localStorage.getItem('jwt'))
       .then((res) => {
         setCurrentUser(res.data);
         closeAllPopups();
@@ -127,11 +127,12 @@ function App() {
         if (res.data._id) {
           setToolTipStatus('success');
           setisInfoToolTipOpen(true);
-          const userData = {
-            email,
-            password,
-          };
-          onLogin(userData);
+          // const userData = {
+          //   email,
+          //   password,
+          // };
+          // onLogin(userData);
+          history.push('/login');
         } else {
           setToolTipStatus('fail');
           setisInfoToolTipOpen(true);
