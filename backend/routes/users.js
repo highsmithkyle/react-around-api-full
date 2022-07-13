@@ -7,6 +7,8 @@ const {
   updateAvatar,
 } = require('../controllers/users');
 
+//const { validateRequestAuth } = require('../middleware/validation');
+
 router.get('/', getUsers);
 router.get('/:userId', getUserbyId);
 router.get('/me', getCurrentUser);

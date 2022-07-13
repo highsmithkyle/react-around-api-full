@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const helmet = require('helmet');
+const cors = require('cors');
 require('dotenv').config();
 const router = require('./routes');
+const { errors } = require('celebrate');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -14,6 +15,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(errors);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'localhost3000');
