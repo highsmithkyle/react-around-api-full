@@ -75,7 +75,7 @@ const unlikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(id, { $pull: { likes: currentUser } }, { new: true })
     .orFail(new NotFoundError('Card ID not found'))
     .then((card) => res.status(HTTP_SUCCESS_OK).send(card))
-    .catch((err) => {
+    .catch((error) => {
       if (error.name === 'CastError') {
         next(new BadRequestError('Invalid Card ID'));
       } else {
