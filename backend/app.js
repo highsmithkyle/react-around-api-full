@@ -18,7 +18,10 @@ app.use(cors());
 app.use(errors);
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'localhost3000');
+  res.header(
+    'Access-Control-Allow-Origin',
+    'https://api.khighsmith.students.nomoredomainssbs.ru/',
+  );
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
