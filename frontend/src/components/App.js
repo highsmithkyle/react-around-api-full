@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { auth } from '../utils/auth';
+import auth from '../utils/auth';
 import api from '../utils/api';
 import ProtectedRoute from './ProtectedRoute';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-import { useHistory } from 'react-router-dom';
-
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
@@ -19,6 +16,7 @@ import AddPlacePopup from './AddPlacePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import closeButton from '../images/close-button.svg';
+import { useHistory } from 'react-router-dom';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
