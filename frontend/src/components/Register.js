@@ -6,6 +6,7 @@ function Register({ handleRegistrationSubmit }) {
   const [password, setPassword] = React.useState('');
 
   const handleSubmit = (e) => {
+    console.log(e);
     e.preventDefault();
     handleRegistrationSubmit(email, password);
   };
