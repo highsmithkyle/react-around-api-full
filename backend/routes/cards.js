@@ -8,8 +8,6 @@ const {
   unlikeCard,
 } = require('../controllers/cards');
 
-//const { validateRequestAuth } = require('../middleware/validation');
-
 router.get('/', getCards);
 router.post('/', createCard);
 router.delete('/:cardId', deleteCard);

@@ -4,13 +4,13 @@ const userRouter = require('./users');
 const cardRouter = require('./cards');
 const auth = require('../middleware/auth');
 const { createUser, login } = require('../controllers/users');
-const { validateLogin, validateUser } = require('../middleware/validation');
+
 const { HTTP_BAD_REQUEST } = require('../utils/error');
 
 router.use(bodyParser.json());
 
-router.post('/signin', validateLogin, login);
-router.post('/signup', validateUser, createUser);
+router.post('/signin', login);
+router.post('/signup', createUser);
 
 router.use(auth); // put below to protect other routes
 
