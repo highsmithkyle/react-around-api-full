@@ -5,8 +5,13 @@ function Register({ onRegister }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  React.useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
     const userData = {
       email,
       password,
