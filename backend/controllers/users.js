@@ -23,7 +23,7 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: '7d',
       });
-      res.send({ data: user.toJSON(), token });
+      res.status(HTTP_SUCCESS).send({ data: user.toJSON(), token });
     })
     .catch((err) => {
       next(new UnauthorizedError('Incorrect email or password'));
@@ -52,20 +52,25 @@ const getUserbyId = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
+  console.log('top');
   const { name, about, avatar, email, password } = req.body;
   User.findOne({ email })
     .then((user) => {
+      console.log('findOne');
       if (user) {
+        console.log('if');
         throw new ConflictError(
           'The user with the provided email already exists',
         );
       } else {
+        console.log('else');
         return bcrypt.hash(password, 10);
       }
     })
     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
     .then((data) => res.status(201).send({ data }))
     .catch((error) => {
+      console.log('catch');
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Missing or invalid email or password'));
       } else {
