@@ -75,7 +75,7 @@ function App() {
       })
       .catch((err) => {
         console.log('An error occured while liking the card');
-        console.log(err);
+        // console.log(err);
       });
   };
 
