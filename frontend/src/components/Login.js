@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Login({ handleLoginSubmit }) {
+function Login({ onLogin }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -10,10 +10,14 @@ function Login({ handleLoginSubmit }) {
     setPassword('');
   }, []);
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    handleLoginSubmit(email, password);
-  };
+    const userData = {
+      email,
+      password,
+    };
+    onLogin(userData);
+  }
 
   return (
     <div className="login">
