@@ -25,7 +25,7 @@ const login = (req, res, next) => {
       });
       res.status(HTTP_SUCCESS).send({ data: user.toJSON(), token });
     })
-    .catch((err) => {
+    .catch(() => {
       next(new UnauthorizedError('Incorrect email or password'));
     });
 };

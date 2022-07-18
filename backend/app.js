@@ -34,10 +34,12 @@ app.use(cors());
 app.options('*', cors());
 app.use(router);
 
-// app.use((err, req, res, next) => {
-//   // console.log(err.message);
-//   res.status(500).send({ message: 'An error occurred on the server' });
-// });
+app.use((err, req, res, next) => {
+  console.log(err.message);
+  res
+    .status(500)
+    .send({ message: 'An error occurred on the server', err: err });
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
