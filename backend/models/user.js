@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     required: true,
+    default: 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
     validate: {
       validator: (v) => validator.isURL(v),
       message: 'Valid URL Required',

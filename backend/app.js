@@ -15,7 +15,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(errors);
+app.use(errors());
 
 app.use((req, res, next) => {
   res.header(
@@ -38,7 +38,7 @@ app.use((err, req, res, next) => {
   console.log(err.message);
   res
     .status(500)
-    .send({ message: 'An error occurred on the server', err: err });
+    .send({ message: 'An error occurred on the server', err: err.message });
 });
 
 app.listen(PORT, () => {
