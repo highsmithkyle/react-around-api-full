@@ -37,7 +37,7 @@ class Auth {
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://api.khighsmith.students.nomoredomainssbs.ru/'
+    ? 'https://api.khighsmith.students.nomoredomainssbs.ru'
     : 'http://localhost:3000';
 
 const auth = new Auth({
