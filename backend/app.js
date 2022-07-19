@@ -20,7 +20,7 @@ app.use(errors());
 app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Origin',
-    'https://api.khighsmith.students.nomoredomainssbs.ru/',
+    'https://api.khighsmith.students.nomoredomainssbs.ru',
   );
   res.header(
     'Access-Control-Allow-Headers',
