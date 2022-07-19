@@ -208,7 +208,7 @@ function App() {
       <div className="page">
         <Header email={email} onSignOut={onSignOut} />
         <Switch>
-          <ProtectedRoute exact path="/" LoggedIn={isLoggedIn}>
+          <ProtectedRoute exact path="/" loggedIn={isLoggedIn}>
             <Main
               onEditProfileClick={handleEditProfileClick}
               onAddPlaceClick={handleAddPlaceClick}
