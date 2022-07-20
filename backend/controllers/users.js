@@ -30,55 +30,6 @@ const login = (req, res, next) => {
     });
 };
 
-const getUsers = (req, res, next) => {
-  User.find({})
-    .orFail(new NotFoundError('The users were not found'))
-    .then((users) => res.status(HTTP_SUCCESS).send(users))
-    .catch(next);
-};
-
-const getUserbyId = (req, res, next) => {
-  const { userId } = req.params;
-  User.findById(userId)
-    .orFail(new NotFoundError('User ID not found'))
-    .then((users) => users.find((user) => user._id === req.params.id))
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError('User ID not found');
-      }
-      res.status(HTTP_SUCCESS).send(user);
-    })
-    .catch(next);
-};
-
-// const createUser = (req, res, next) => {
-//   console.log('top');
-//   const { name, about, avatar, email, password } = req.body;
-//   User.findOne({ email })
-//     .then((user) => {
-//       console.log('findOne');
-//       if (user) {
-//         console.log('if');
-//         throw new ConflictError(
-//           'The user with the provided email already exists',
-//         );
-//       } else {
-//         console.log('else');
-//         return bcrypt.hash(password, 10);
-//       }
-//     })
-//     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
-//     .then((data) => res.status(201).send({ data }))
-//     .catch((error) => {
-//       console.log('catch');
-//       if (err.name === 'ValidationError') {
-//         next(new BadRequestError('Missing or invalid email or password'));
-//       } else {
-//         next(error);
-//       }
-//     });
-// };
-
 const createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
   User.findOne({ email })
@@ -108,6 +59,27 @@ const createUser = (req, res, next) => {
         next(err);
       }
     });
+};
+
+const getUsers = (req, res, next) => {
+  User.find({})
+    .orFail(new NotFoundError('The users were not found'))
+    .then((users) => res.status(HTTP_SUCCESS).send(users))
+    .catch(next);
+};
+
+const getUserbyId = (req, res, next) => {
+  const { userId } = req.params;
+  User.findById(userId)
+    .orFail(new NotFoundError('User ID not found'))
+    .then((users) => users.find((user) => user._id === req.params.id))
+    .then((user) => {
+      if (!user) {
+        throw new NotFoundError('User ID not found');
+      }
+      res.status(HTTP_SUCCESS).send(user);
+    })
+    .catch(next);
 };
 
 const getCurrentUser = (req, res, next) => {
@@ -145,6 +117,7 @@ const updateUserProfile = (req, res, next) => {
 const updateAvatar = (req, res) => {
   const currentUser = req.user._id;
   const { avatar } = req.body;
+
   User.findByIdAndUpdate(
     currentUser,
     { avatar },

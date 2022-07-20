@@ -90,7 +90,7 @@ function App() {
 
   function handleUpdateUser({ name, about }) {
     api
-      .changeProfileInfo({ name, about }, localStorage.getItem('jwt'))
+      .editUserInfo({ name, about }, localStorage.getItem('jwt'))
       .then((res) => {
         setCurrentUser(res.data);
         closeAllPopups();
@@ -100,7 +100,7 @@ function App() {
 
   function handleUpdateAvatar(avatar) {
     api
-      .changeProfileAvatar({ avatar }, localStorage.getItem('jwt'))
+      .updateAvatar({ avatar }, localStorage.getItem('jwt'))
       .then((res) => {
         setCurrentUser(res.data);
         closeAllPopups();
@@ -110,7 +110,7 @@ function App() {
 
   function handleAddPlaceSubmit(newCard) {
     api
-      .createCard(newCard, localStorage.getItem('jwt'))
+      .addNewCard(newCard, localStorage.getItem('jwt'))
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -197,9 +197,7 @@ function App() {
         closeAllPopups();
       }
     };
-
     document.addEventListener('keydown', closeByEscape);
-
     return () => document.removeEventListener('keydown', closeByEscape);
   }, []);
 

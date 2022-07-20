@@ -8,14 +8,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 2,
     maxlength: 30,
-    default: 'Kyle Highsmith',
+    default: 'Jacques Cousteau',
   },
   about: {
     type: String,
     required: true,
     minlength: 2,
     maxlength: 30,
-    default: 'Web Developer',
+    default: 'Explorer',
   },
   avatar: {
     type: String,
