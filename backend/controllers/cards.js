@@ -33,7 +33,7 @@ const createCard = (req, res, next) => {
 
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  Card.findById(cardId)
+  Card.findById(cardId) // tried making it an object
     .orFail(() => new NotFoundError('Card ID not found'))
     .then((card) => {
       if (!(card.owner.toString() === req.user._id)) {
@@ -49,6 +49,7 @@ const deleteCard = (req, res, next) => {
 };
 
 const likeCard = (req, res, next) => {
+  debugger;
   const currentUser = req.user._id;
   const { id } = req.params;
 
@@ -61,7 +62,7 @@ const likeCard = (req, res, next) => {
     .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((error) => {
       if (error.name === 'CastError') {
-        next(new BadRequestError('Invalid Card ID'));
+        next(new BadRequestError('Invalid Card ID')); //
       } else {
         next(error);
       }
