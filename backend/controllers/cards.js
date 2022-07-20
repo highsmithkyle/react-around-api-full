@@ -43,7 +43,6 @@ const deleteCard = (req, res, next) => {
 };
 
 const likeCard = (req, res, next) => {
-  debugger;
   const currentUser = req.user._id;
   const { cardId } = req.params;
   console.log(cardId);
