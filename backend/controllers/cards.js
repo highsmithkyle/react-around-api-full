@@ -45,10 +45,10 @@ const deleteCard = (req, res, next) => {
 const likeCard = (req, res, next) => {
   debugger;
   const currentUser = req.user._id;
-  const { id } = req.params;
-
+  const { cardId } = req.params;
+  console.log(cardId);
   Card.findByIdAndUpdate(
-    { _id: id },
+    { _id: cardId },
     { $addToSet: { likes: currentUser } },
     { new: true },
   )
@@ -56,7 +56,8 @@ const likeCard = (req, res, next) => {
     .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((error) => {
       if (error.name === 'CastError') {
-        next(new BadRequestError('Invalid Card ID')); //
+        // next(new BadRequestError('Invalid Card ID')); //
+        console.log(error);
       } else {
         next(error);
       }
@@ -65,9 +66,13 @@ const likeCard = (req, res, next) => {
 
 const unlikeCard = (req, res, next) => {
   const currentUser = req.user._id;
-  const { id } = req.params;
+  const { cardId } = req.params;
 
-  Card.findByIdAndUpdate(id, { $pull: { likes: currentUser } }, { new: true })
+  Card.findByIdAndUpdate(
+    cardId,
+    { $pull: { likes: currentUser } },
+    { new: true },
+  )
     .orFail(new NotFoundError('Card ID not found'))
     .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((error) => {

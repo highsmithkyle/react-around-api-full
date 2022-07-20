@@ -65,7 +65,15 @@ function App() {
   }, []);
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((cardId) => cardId === currentUser._id);
+    const isLiked = card.likes.some((cardId) => {
+      console.log(cardId === currentUser._id);
+      console.log(cardId[0]);
+      console.log(currentUser._id);
+      return cardId[0] === currentUser._id;
+    });
+    // console.log(!isLiked);
+    // console.log(currentUser);
+    // console.log(card.likes);
     api
       .changeLikeStatus(card._id, !isLiked, localStorage.getItem('jwt'))
       .then((newCard) => {
