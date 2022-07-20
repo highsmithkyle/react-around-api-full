@@ -1,11 +1,5 @@
 const Card = require('../models/card');
-
-const {
-  HTTP_SUCCESS,
-  HTTP_BAD_REQUEST,
-  HTTP_NOT_FOUND,
-  HTTP_INTERNAL_SERVER_ERROR,
-} = require('../utils/error');
+const { HTTP_SUCCESS } = require('../utils/error');
 
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');

@@ -114,7 +114,7 @@ const updateUserProfile = (req, res, next) => {
     });
 };
 
-const updateAvatar = (req, res) => {
+const updateAvatar = (req, res, next) => {
   const currentUser = req.user._id;
   const { avatar } = req.body;
 
@@ -132,7 +132,8 @@ const updateAvatar = (req, res) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Invalid link'));
       } else if (error.name === 'CastError') {
-        next(new BadRequestError('Invalid user ID')); //// error next is not defined
+        console.log(error);
+        // next(new BadRequestError('Invalid user ID'));
       } else {
         next(error);
       }
