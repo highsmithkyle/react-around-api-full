@@ -132,7 +132,7 @@ const updateAvatar = (req, res) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Invalid link'));
       } else if (error.name === 'CastError') {
-        next(new BadRequestError('Invalid user ID'));
+        next(new BadRequestError('Invalid user ID')); //// error next is not defined
       } else {
         next(error);
       }
