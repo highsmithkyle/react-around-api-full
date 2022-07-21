@@ -31,7 +31,6 @@ const deleteCard = (req, res, next) => {
     .orFail(() => new NotFoundError('Card ID not found'))
     .then((card) => {
       if (!(card.owner.toString() === req.user._id)) {
-        console.log(error);
         throw new Error('Missing permission to delete');
       }
       Card.findByIdAndRemove({ _id: cardId })
@@ -45,7 +44,7 @@ const deleteCard = (req, res, next) => {
 const likeCard = (req, res, next) => {
   const currentUser = req.user._id;
   const { cardId } = req.params;
-  console.log(cardId);
+
   Card.findByIdAndUpdate(
     { _id: cardId },
     { $addToSet: { likes: currentUser } },
@@ -55,8 +54,7 @@ const likeCard = (req, res, next) => {
     .then((card) => res.status(HTTP_SUCCESS).send(card))
     .catch((error) => {
       if (error.name === 'CastError') {
-        // next(new BadRequestError('Invalid Card ID')); //
-        console.log(error);
+        next(new BadRequestError('Invalid Card ID'));
       } else {
         next(error);
       }

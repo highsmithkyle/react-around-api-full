@@ -117,7 +117,7 @@ const updateUserProfile = (req, res, next) => {
 const updateAvatar = (req, res, next) => {
   const currentUser = req.user._id;
   const { avatar } = req.body;
-  console.log(req.body.avatar.avatar);
+  // console.log(req.body.avatar.avatar);
   User.findByIdAndUpdate(
     currentUser,
     { avatar: req.body.avatar.avatar },
@@ -129,13 +129,13 @@ const updateAvatar = (req, res, next) => {
     .orFail(new NotFoundError('User ID not found'))
     .then((user) => res.status(HTTP_SUCCESS).send({ data: user }))
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       if (error.name === 'ValidationError') {
-        // next(new BadRequestError('Invalid link'));
-        console.log(error);
+        next(new BadRequestError('Invalid link'));
+        // console.log(error);
       } else if (error.name === 'CastError') {
-        console.log(error);
-        // next(new BadRequestError('Invalid user ID'));
+        // console.log(error);
+        next(new BadRequestError('Invalid user ID'));
       } else {
         next(error);
       }

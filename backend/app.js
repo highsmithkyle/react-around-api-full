@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config();
+const { requestLogger, errorLogger } = require('./middleware/logger');
 const router = require('./routes');
 const { errors } = require('celebrate');
 
@@ -32,7 +33,16 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.options('*', cors());
+app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Server will crash now');
+  }, 0);
+});
+
 app.use(router);
+app.use(errorLogger);
 
 app.use((err, req, res, next) => {
   console.log(err.message);
