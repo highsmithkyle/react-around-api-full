@@ -16,8 +16,13 @@ const {
 
 router.get('/', validateRequestAuth, getCards);
 router.post('/', validateRequestAuth, validateCard, createCard);
-router.delete('/:cardId', validateRequestAuth, deleteCard); //validateCardId
-router.put('/:cardId/likes', validateRequestAuth, likeCard); //validateCardId,
-router.delete('/:cardId/likes', validateRequestAuth, unlikeCard); //validateCardId,
+router.delete('/:cardId', validateRequestAuth, validateCardId, deleteCard);
+router.put('/:cardId/likes', validateRequestAuth, validateCardId, likeCard);
+router.delete(
+  '/:cardId/likes',
+  validateRequestAuth,
+  validateCardId,
+  unlikeCard,
+);
 
 module.exports = router;
