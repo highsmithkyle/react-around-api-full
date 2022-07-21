@@ -26,7 +26,7 @@ const login = (req, res, next) => {
       res.status(HTTP_SUCCESS).send({ data: user.toJSON(), token });
     })
     .catch(() => {
-      next(new UnauthorizedError('token validation failed'));
+      next(new UnauthorizedError('validation failed'));
     });
 };
 

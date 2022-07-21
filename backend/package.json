@@ -35,6 +35,7 @@
     "is-email": "^1.0.2",
     "is-url": "^1.2.4",
     "isemail": "^3.2.0",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongo-objectid": "^1.2.2",
     "mongoose": "^6.3.3",
