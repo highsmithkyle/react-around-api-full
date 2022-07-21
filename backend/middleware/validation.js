@@ -47,22 +47,9 @@ const validateLogin = celebrate({
   }),
 });
 
-// const validateCardId = celebrate({
-//   params: Joi.object().keys({
-//     id: Joi.string()
-//       .required()
-//       .custom((value, helpers) => {
-//         if (ObjectId.isValid(value)) {
-//           return value;
-//         }
-//         return helpers.message('Invalid Card ID');
-//       }),
-//   }),
-// });
-
 const validateCardId = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().hex().message('The id is invalid').messages({
+    cardId: Joi.string().hex().message('The Id is invalid').messages({
       'string.empty': 'The "Id" filed must be filled in',
     }),
   }),
