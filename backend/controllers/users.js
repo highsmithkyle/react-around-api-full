@@ -4,12 +4,7 @@ const User = require('../models/user');
 
 const { JWT_SECRET } = process.env; // nodeENV needed?
 
-const {
-  HTTP_SUCCESS,
-  HTTP_NOT_FOUND,
-  HTTP_BAD_REQUEST,
-  HTTP_INTERNAL_SERVER_ERROR,
-} = require('../utils/error');
+const { HTTP_SUCCESS } = require('../utils/error');
 
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
@@ -106,7 +101,7 @@ const updateUserProfile = (req, res, next) => {
     .catch((error) => {
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Invalid name or description'));
-      } else if (err.name === 'CastError') {
+      } else if (error.name === 'CastError') {
         next(new BadRequestError('Invalid user ID'));
       } else {
         next(error);
@@ -116,8 +111,7 @@ const updateUserProfile = (req, res, next) => {
 
 const updateAvatar = (req, res, next) => {
   const currentUser = req.user._id;
-  const { avatar } = req.body;
-  // console.log(req.body.avatar.avatar);
+  // const { avatar } = req.body;
   User.findByIdAndUpdate(
     currentUser,
     { avatar: req.body.avatar.avatar },
@@ -129,12 +123,9 @@ const updateAvatar = (req, res, next) => {
     .orFail(new NotFoundError('User ID not found'))
     .then((user) => res.status(HTTP_SUCCESS).send({ data: user }))
     .catch((error) => {
-      // console.log(error);
       if (error.name === 'ValidationError') {
         next(new BadRequestError('Invalid link'));
-        // console.log(error);
       } else if (error.name === 'CastError') {
-        // console.log(error);
         next(new BadRequestError('Invalid user ID'));
       } else {
         next(error);

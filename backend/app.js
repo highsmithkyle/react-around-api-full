@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config();
+const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const router = require('./routes');
-const { errors } = require('celebrate');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -45,6 +45,7 @@ app.use(router);
 app.use(errorLogger);
 
 app.use((err, req, res, next) => {
+  // eslint-disable-next-line no-console
   console.log(err.message);
   res
     .status(500)
