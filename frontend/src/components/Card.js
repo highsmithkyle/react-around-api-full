@@ -10,8 +10,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   const isLiked = card.likes.some((item) => item[0] === currentUser._id);
   const cardLikeButtonClassName = `elements__heart ${
-    isLiked ? 'elements__heart_visible' : 'elements__heart_hidden' // always unliked
-    // isLiked ? 'elements__heart_hidden' : 'elements__heart_visible' // always liked
+    isLiked ? 'elements__heart_visible' : 'elements__heart_hidden'
   }`;
 
   function handleClick() {
