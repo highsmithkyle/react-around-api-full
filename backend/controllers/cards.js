@@ -33,10 +33,6 @@ const deleteCard = (req, res, next) => {
       if (!(card.owner.toString() === req.user._id)) {
         throw new Error('Missing permission to delete');
       }
-      // Card.findByIdAndRemove({ _id: cardId })
-      //   .orFail(new NotFoundError('Card ID not found'))
-      //   .then((card) => res.status(HTTP_SUCCESS).send(card))
-      //   .catch(next);
 
       Card.deleteOne(card).then(() => res.status(HTTP_SUCCESS).send(card));
     })
