@@ -21,12 +21,14 @@ const login = (req, res, next) => {
       res.status(HTTP_SUCCESS).send({ data: user.toJSON(), token });
     })
     .catch(() => {
-      next(new UnauthorizedError('validation failed'));
+      next(new UnauthorizedError('Incorrect email or password'));
     });
 };
 
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   User.findOne({ email })
     .then((user) => {
       if (user) {
@@ -44,8 +46,7 @@ const createUser = (req, res, next) => {
         avatar,
         email,
         password: hash,
-      }),
-    )
+      }))
     .then((data) => res.status(201).send({ data }))
     .catch((err) => {
       if (err.name === 'ValidationError') {

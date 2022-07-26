@@ -66,14 +66,9 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((cardId) => {
-      // console.log(cardId === currentUser._id);
-      // console.log(cardId[0]);
-      // console.log(currentUser._id);
       return cardId[0] === currentUser._id;
     });
-    // console.log(!isLiked);
-    // console.log(currentUser);
-    // console.log(card.likes);
+
     api
       .changeLikeStatus(card._id, !isLiked, localStorage.getItem('jwt'))
       .then((newCard) => {
@@ -132,11 +127,7 @@ function App() {
         if (res.data._id) {
           setToolTipStatus('success');
           setisInfoToolTipOpen(true);
-          // const userData = {
-          //   email,
-          //   password,
-          // };
-          // onLogin(userData);
+
           history.push('/login');
         } else {
           setToolTipStatus('fail');

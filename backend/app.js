@@ -46,10 +46,12 @@ app.use(errorLogger);
 
 app.use((err, req, res, next) => {
   // eslint-disable-next-line no-console
-  console.log(err.message);
+
   res
-    .status(500)
-    .send({ message: 'An error occurred on the server', err: err.message });
+    .status(err.statusCode ? err.statusCode : 500)
+    .send({
+      message: err.message ? err.message : 'An error occurred on the server',
+    });
 });
 
 app.listen(PORT, () => {
